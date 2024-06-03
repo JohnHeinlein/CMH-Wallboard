@@ -11,13 +11,13 @@
 
 ## Replace launcher & wipe app data
 - Install Nova Launcher:
-- ```
-  .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
-  ```
+  - ```
+    .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
+    ```
 - Move launcher to private apps (persistent installation directory):
-- ```
-  .\adb root; .\adb remount; .\adb shell mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/
-  ```
+  - ```
+    .\adb root; .\adb remount; .\adb shell mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/
+    ```
 - Remove Zygote MDM
   - ```
     .\adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk;
