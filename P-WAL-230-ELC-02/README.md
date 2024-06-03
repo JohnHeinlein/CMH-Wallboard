@@ -54,7 +54,9 @@ Can be replaced with a custom animation, or deleted to fall back to the stock an
 This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed.
 
 ### 1) Change RKDevTool to English (If not already)
-![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d) ### 2) Dump boot img
+![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d) 
+
+### 2) Dump boot img
    - ```
       .\adb shell ls -l /dev/block/platform/*/by-name/boot
       ```
