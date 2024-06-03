@@ -38,11 +38,11 @@ adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system
 ## Wallpaper
 1. Push file to Pictures directory
    - ```
-     adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
+     .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
      ```
 2. Launch wallpaper changer
    - ```
-     am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
+     .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
      ```
 
 ## Clear boot images
