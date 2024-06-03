@@ -47,7 +47,7 @@ adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system
 ## Boot animation
 Can be replaced with a custom animation, or deleted to fall back to the stock android animation.
 - ```
-  rm /system/media/bootanimation.zip
+  .\adb root; .\adb remount; .\adb shell rm /system/media/bootanimation.zip
   ```
 
 ## Boot splash (baked into ROM)
