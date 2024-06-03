@@ -44,22 +44,17 @@ adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system
    - ```
      .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
      ```
-
-## Clear boot images
-
-### Bootanimation.zip
+## Boot animation
 Can be replaced with a custom animation, or deleted to fall back to the stock android animation.
 - ```
   rm /system/media/bootanimation.zip
   ```
 
-### Boot splash (baked into ROM)
+## Boot splash (baked into ROM)
 This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed.
 
-1) Download imgRePackerRK, Rockchip Driver Assistant, and RKDevTool.
-2) Change RKDevTool to English (Rockchip is a Chinese company, and this is their in-house software)
-![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d)
-3) Dump boot img
+### 1) Change RKDevTool to English (If not already)
+![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d) ### 2) Dump boot img
    - ```
       .\adb shell ls -l /dev/block/platform/*/by-name/boot
       ```
@@ -70,15 +65,24 @@ This is the most intesive step, as the static boot splash image is baked into th
         ```
 > [!WARNING]
 > Make sure the partition `/dev/block/mmcblk1p6` corresponds to the boot partition!
+> `ls -l /dev/block/platform/*/by-name` to see all partitions
 
-4) Unpack & modify boot image
-   1) `.\imgRePackerRK.exe boot.img` to unpack
+### 3) Unpack & Modify Image
+   1) Unpack
+      ```
+      .\utilities\imgRePackerRK_1077_test\imgRePackerRK.exe .\images\boot.img
+      ```
       - Creates a `boot.img.cfg` file and a `boot.img.dump` directory
-   2) Replace `boot.img.dump\second.dump\logo.bmp` with a modified file
-   3) `.\imgRePackerRK.exe boot.img.cfg` to repack
-      - Might be a smaller file size, this is fine.
-      - Orginal is renamed boot.img.bak
-5) Upload modified image to device
+   3) Replace `boot.img.dump\second.dump\logo.bmp` with a modified file from `.\pictures`
+   4) Repack
+      ```
+      .\utilities\imgRePackerRK_1077_test\imgRePackerRK.exe .\images\boot.img.cfg
+      ```
+> [!NOTE]
+> - Might be a smaller file size, this is fine.
+> - Orginal is renamed boot.img.bak
+
+### 4) Upload modified image to device
    1) launch RKDevTool.exe
       -  Bottom should read "Found One ADB Device"
    3) Click empty space to far right of "Boot" entry & select repacked img file
