@@ -14,16 +14,17 @@
 - ```
   .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
   ```
-- `adb shell` then `su` for root shell
-- `mount -o rw,remount /system` to allow changes to write-protected system parition
-- `mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/` to move Nova Launcher to persistent storage
+- Move launcher to private apps (persistent installation directory):
+- ```
+  .\adb root; .\adb remount; .\adb shell mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/
+  ```
 - Remove Zygote MDM
   - ```
-    rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk;
+    .\adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk;
     ```
 One-liner:
 ```
-adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/
+adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk;
 ```
 
 
