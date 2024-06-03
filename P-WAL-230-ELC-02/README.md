@@ -10,7 +10,10 @@
 - Enable dev mode through settings
 
 ## Replace launcher & wipe app data
-- `adb install <path-to-launcher-apk>` to load Nova Launcher
+- Install Nova Launcher:
+- ```
+  .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
+  ```
 - `adb shell` then `su` for root shell
 - `mount -o rw,remount /system` to allow changes to write-protected system parition
 - `mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/` to move Nova Launcher to persistent storage
@@ -34,41 +37,40 @@ adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system
 
 ## Wallpaper
 1. Push file to Pictures directory
-2. `.\adb push <path-to-img> /data/media/0/Pictures/default_wallpaper.png`
-   - On my system:
    - ```
-     adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
+     .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
      ```
-4. Launch wallpaper changer
+2. Launch wallpaper changer
    - ```
-     am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///data/media/0/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
+     .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
      ```
 
-## Clear boot splashes
+## Clear boot images
 
 ### Bootanimation.zip
+Can be replaced with a custom animation, or deleted to fall back to the stock android animation.
 - ```
   rm /system/media/bootanimation.zip
   ```
 
-Can be replaced with a custom animation, or deleted to fall back to the stock android animation.
-
-### Boot splash baked into kernel
+### Boot splash (baked into ROM)
 This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed.
 
 1) Download imgRePackerRK, Rockchip Driver Assistant, and RKDevTool.
 2) Change RKDevTool to English (Rockchip is a Chinese company, and this is their in-house software)
 ![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d)
 3) Dump boot img
-   1) `.\adb shell`
-   2) `su`
-   3) `ls -l /dev/block/platform/*/by-name/recovery` to get the eMMC boot partition as a block device.
-      - e.g. `/dev/block/mmcblk1p6`
+   - ```
+      .\adb shell ls -l /dev/block/platform/*/by-name/boot
+      ```
       ![partitions](https://github.com/JohnHeinlein/testing_notes/assets/29853148/5590091c-d806-4a05-913f-e825b94ebf8c)
+   - Pull block device to host as a .img file
+      - ```
+        .\adb pull /dev/block/mmcblk1p6 .\images\boot.img
+        ```
+> [!WARNING]
+> Make sure the partition `/dev/block/mmcblk1p6` corresponds to the boot partition!
 
-   5) `exit` shell
-   6) `.\adb pull <mmc partition path> <relative destination on host>` to dump partition to host. May need `adb root` first.
-      - e.g.  `.\adb pull /dev/block/mmcblk1p6 .\images\boot.img`
 4) Unpack & modify boot image
    1) `.\imgRePackerRK.exe boot.img` to unpack
       - Creates a `boot.img.cfg` file and a `boot.img.dump` directory
