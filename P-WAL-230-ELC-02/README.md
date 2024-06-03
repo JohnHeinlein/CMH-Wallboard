@@ -10,7 +10,10 @@
 - Enable dev mode through settings
 
 ## Replace launcher & wipe app data
-- `adb install <path-to-launcher-apk>` to load Nova Launcher
+- Install Nova Launcher:
+- ```
+  .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
+  ```
 - `adb shell` then `su` for root shell
 - `mount -o rw,remount /system` to allow changes to write-protected system parition
 - `mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/` to move Nova Launcher to persistent storage
@@ -34,12 +37,10 @@ adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system
 
 ## Wallpaper
 1. Push file to Pictures directory
-2. `.\adb push <path-to-img> /data/media/0/Pictures/default_wallpaper.png`
-   - On my system:
    - ```
      adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
      ```
-4. Launch wallpaper changer
+2. Launch wallpaper changer
    - ```
      am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///data/media/0/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
      ```
