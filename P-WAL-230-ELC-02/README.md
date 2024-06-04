@@ -59,7 +59,10 @@ Otherwise:
      ```
 
 ## Boot splash (baked into ROM)
-This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed. **Not every step is mandatory, as I've included the pre-packed .img for the 230 & 220.** It is only strictly necessary to switch to Loader mode and push the image to the correct address, unless you're working on a different model and want to be safe.
+This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed. 
+
+> [!NOTE]
+> **Not every step is mandatory, as I've included the pre-packed .img for the 230 & 220.** It is only strictly necessary to switch to Loader mode and push the image to the correct address, unless you're working on a different model and want to be safe.
 
 ### 1) Change RKDevTool to English (If not already)
 ![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d) 
