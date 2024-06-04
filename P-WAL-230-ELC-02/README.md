@@ -11,6 +11,12 @@
 - Enable dev mode through settings
 
 ## Replace launcher & wipe app data
+
+One-liner: Installs Nova Launcher, removes Zygote, and reboots to ensure Zygote is properly dead before continuing.
+```
+adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/'; .\adb reboot
+```
+Otherwise, 
 - Install Nova Launcher:
   - ```
     .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
@@ -23,10 +29,6 @@
   - ```
     .\adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/;
     ```
-One-liner:
-```
-adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/'; .\adb reboot
-```
 
 
 
@@ -37,7 +39,12 @@ adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19
 > [!NOTE]
 > This device is symlinked to various other locations, `/data/media/0` should be the main device. Some links, like `/mnt/sdcard`, are not protected. Not very relevant here, but good to know in general.
 
-## Wallpaper
+## Wallpaper & Boot Animation
+One-liner: Push wallpaper to Pictures director, call Nova's wallpaper changer, and remove proprietary startup animation.
+```
+.\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; .\adb root; .\adb remount; .\adb shell 'rm /system/media/bootanimation.zip'
+```
+Otherwise:
 1. Push file to Pictures directory
    - ```
      .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
@@ -46,14 +53,13 @@ adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19
    - ```
      .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
      ```
-## Boot animation
-Can be replaced with a custom animation, or deleted to fall back to the stock android animation.
-- ```
-  .\adb root; .\adb remount; .\adb shell 'rm /system/media/bootanimation.zip'
-  ```
+3. Delete startup animation
+   - ```
+     .\adb root; .\adb remount; .\adb shell 'rm /system/media/bootanimation.zip'
+     ```
 
 ## Boot splash (baked into ROM)
-This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed.
+This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed. **Not every step is mandatory, as I've included the pre-packed .img for the 230 & 220.** It is only strictly necessary to switch to Loader mode and push the image to the correct address, unless you're working on a different model and want to be safe.
 
 ### 1) Change RKDevTool to English (If not already)
 ![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d) 
