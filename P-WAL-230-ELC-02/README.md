@@ -1,7 +1,13 @@
-**Monolithic command:** Install Nova, kill Zygote, remove boot animation, clear user data, etc. Only necessary to flash boot part after this.
-```
-adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/ /system/media/bootanimation.zip'; .\adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote'; .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*';
-```
+## Command Summary. Broken up & explained better below.
+1. Launcher
+   ```
+   .\adb root; .\adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/'; .\adb reboot
+   ```
+2. Clear data & Set Wallpaper
+   ```
+   .\adb root; .\adb remount; .\adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*';
+   ```
+3. Set boot splash with RKDevTool
 
 > [!NOTE]
 > Should also work for P-WAL-220-ELC-02; same device, smaller screen
@@ -17,7 +23,7 @@ adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19
 
 ## Replace launcher & wipe app data
 
-One-liner: Installs Nova Launcher, removes Zygote, and reboots to ensure Zygote is properly dead before continuing.
+**One-liner**: Installs Nova Launcher, removes Zygote, and reboots to ensure Zygote is properly dead before continuing.
 ```
 adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/'; .\adb reboot
 ```
@@ -34,8 +40,6 @@ Otherwise,
   - ```
     .\adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/;
     ```
-
-
 
 ## Clear user data
 - ```
