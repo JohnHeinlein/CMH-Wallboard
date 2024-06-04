@@ -40,7 +40,7 @@ Otherwise,
 > This device is symlinked to various other locations, `/data/media/0` should be the main device. Some links, like `/mnt/sdcard`, are not protected. Not very relevant here, but good to know in general.
 
 ## Wallpaper & Boot Animation
-One-liner: Push wallpaper to Pictures director, call Nova's wallpaper changer, and remove proprietary startup animation.
+**One-liner**: Push wallpaper to Pictures director, call Nova's wallpaper changer, and remove proprietary startup animation.
 ```
 .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; .\adb root; .\adb remount; .\adb shell 'rm /system/media/bootanimation.zip'
 ```
