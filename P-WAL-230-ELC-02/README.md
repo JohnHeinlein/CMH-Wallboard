@@ -1,4 +1,11 @@
-## Command Summary. Broken up & explained better below.
+
+> [!NOTE]
+> Should also work for P-WAL-220-ELC-02; same device, smaller screen.
+> 
+> Written assuming windows powershell syntax. Adjust as appropriate for linux, etc.
+
+## Command Summary.
+*Broken up & explained better below*
 1. Launcher
    ```
    .\adb root; .\adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/'; .\adb reboot
@@ -9,9 +16,7 @@
    ```
 3. Set boot splash with RKDevTool
 
-> [!NOTE]
-> Should also work for P-WAL-220-ELC-02; same device, smaller screen
-> Written assuming windows powershell syntax. Adjust as appropriate for linux, etc.
+---
 
 ## Enable debugging
 - Plug USB keyboard in BEFORE BOOT
