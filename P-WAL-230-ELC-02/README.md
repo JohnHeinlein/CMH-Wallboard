@@ -1,6 +1,9 @@
 > [!WARNING]
-> This repo contains copyrighted material in the form of logos for my employer. This logo is present in the repackaged image and wallpaper - **follow the instructions for full customization**.
-> Addtionally, this repo is not licensed as I include tools that I may not be strictly allowed to redistribute. Namely, Rockchip's github repos are unlicensed and presumably not redistributable. If this is the case, I will remove them upon request. Original source for the RK tools can be found in [their github repo](https://github.com/rockchip-android/RKTools)
+> This repo contains copyrighted material in the form of my employer's logos. This logo is present in the repackaged image and wallpaper - **follow the instructions for full customization**.
+> 
+> Addtionally, this repo is not licensed as I include tools that I may not be strictly allowed to redistribute.
+> Namely, Rockchip's github repos are unlicensed and presumably not redistributable. If this is the case, I will remove them upon request. Original source for the RK tools can be found in [their github repo](https://github.com/rockchip-android/RKTools)
+>
 > This also applies for redistributing the repackaged ROM, as I'm not 100% sure that it does not contain copyrighted components. I will remove them upon request, in which case you should follow the instructions below to dump the ROM yourself.
 
 > [!NOTE]
