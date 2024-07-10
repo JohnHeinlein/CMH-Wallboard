@@ -15,12 +15,12 @@
 *Broken up & explained better below*
 1. Launcher
    ```
-   .\adb root; .\adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/app/com.patientpoint.dmm-2 /data/app/com.contextmediainc.system.zygote-1 /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/';
+   adb root; adb remount; adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/app/com.patientpoint.dmm-2 /data/app/com.contextmediainc.system.zygote-1 /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/';
    ```
 2. Set boot splash with RKDevTool (Saves a reboot doing it here)
 3. Clear data & Set Wallpaper
    ```
-   .\adb root; .\adb remount; .\adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*';
+   adb root; adb remount; adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*';
    ```
 ---
 
@@ -36,25 +36,25 @@
 
 **One-liner**: Installs Nova Launcher, removes Zygote, and reboots to ensure Zygote is properly dead before continuing.
 ```
-adb root; adb remount; .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/'; .\adb reboot
+adb root; adb remount; adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/'; adb reboot
 ```
 Otherwise, 
 - Install Nova Launcher:
   - ```
-    .\adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
+    adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'
     ```
 - Move launcher to private apps (persistent installation directory):
   - ```
-    .\adb root; .\adb remount; .\adb shell mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/
+    adb root; adb remount; adb shell mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/
     ```
 - Remove Zygote MDM
   - ```
-    .\adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/;
+    adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/;
     ```
 
 ## Clear user data
 - ```
-  .\adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote'
+  adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote'
   ```
 > [!NOTE]
 > This device is symlinked to various other locations, `/data/media/0` should be the main device. Some links, like `/mnt/sdcard`, are not protected. Not very relevant here, but good to know in general.
@@ -62,20 +62,20 @@ Otherwise,
 ## Wallpaper & Boot Animation
 **One-liner**: Push wallpaper to Pictures director, call Nova's wallpaper changer, and remove proprietary startup animation.
 ```
-.\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; .\adb root; .\adb remount; .\adb shell 'rm /system/media/bootanimation.zip'
+adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; adb root; adb remount; adb shell 'rm /system/media/bootanimation.zip'
 ```
 Otherwise:
 1. Push file to Pictures directory
    - ```
-     .\adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
+     adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
      ```
 2. Launch wallpaper changer
    - ```
-     .\adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
+     adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'
      ```
 3. Delete startup animation
    - ```
-     .\adb root; .\adb remount; .\adb shell 'rm /system/media/bootanimation.zip'
+     adb root; adb remount; adb shell 'rm /system/media/bootanimation.zip'
      ```
 
 ## Boot splash (baked into ROM)
@@ -89,12 +89,12 @@ This is the most intesive step, as the static boot splash image is baked into th
 
 ### 2) Dump boot img
    - ```
-      .\adb shell ls -l /dev/block/platform/*/by-name/boot
+      adb shell ls -l /dev/block/platform/*/by-name/boot
       ```
       ![partitions](https://github.com/JohnHeinlein/testing_notes/assets/29853148/5590091c-d806-4a05-913f-e825b94ebf8c)
    - Pull block device to host as a .img file
       - ```
-        .\adb pull /dev/block/mmcblk1p6 .\images\boot.img
+        adb pull /dev/block/mmcblk1p6 .\images\boot.img
         ```
 > [!WARNING]
 > Make sure the partition `/dev/block/mmcblk1p6` corresponds to the boot partition!
