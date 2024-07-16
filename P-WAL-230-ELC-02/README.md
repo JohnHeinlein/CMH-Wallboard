@@ -18,9 +18,9 @@
    adb root; adb remount; adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/app/com.patientpoint.dmm-2 /data/app/com.contextmediainc.system.zygote-1 /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/';
    ```
 2. Set boot splash with RKDevTool (Saves a reboot doing it here)
-3. Clear data & Set Wallpaper
+3. Clear data. set wallpaper, re-enable setup wizard, and scrub strings from build.prop
    ```
-   adb root; adb remount; adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*';
+   adb root; adb remount; adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; adb push .\resources\build.prop /system/build.prop; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity; adb shell settings put secure user_setup_complete 0;
    ```
 ---
 
@@ -137,7 +137,7 @@ This is the most intesive step, as the static boot splash image is baked into th
 
 One-liner:
 - ```
-  adb root; adb remount; adb push .\resources\build.prop /system/build.prop
+  adb root; adb remount; adb push .\resources\build.prop /system/build.prop; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity; adb root; adb shell settings pu secure user_setup_complete 0;
   ```
 
 ### Modify build.prop
@@ -163,7 +163,7 @@ Several configuration options can be changed, including the first-time setup wiz
    ```
 4) Enable system setting
    ```
-   adb root; adb shell settings pu secure user_setup_complete 0
+   adb root; adb shell settings put secure user_setup_complete 0
    ```
 
 A factory reset would also trigger the setup wizard once it's enabled in build.prop, however this will also clear the preloaded wallpaper. Setting it to run manually like this allows for userspace customization to be done beforehand
