@@ -82,7 +82,6 @@ Otherwise:
      ```
 
 ## Boot splash (baked into ROM)
-
 This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed. 
 
 > [!NOTE]
@@ -93,13 +92,12 @@ This is the most intesive step, as the static boot splash image is baked into th
 ![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d) 
 
 ### 2) Dump boot img
-
    - ```
       adb shell ls -l /dev/block/platform/*/by-name/boot
       ```
       ![partitions](https://github.com/JohnHeinlein/testing_notes/assets/29853148/5590091c-d806-4a05-913f-e825b94ebf8c)
    - Pull block device to host as a .img file
-      - ```
+	- ```
         adb pull /dev/block/mmcblk1p6 .\images\boot.img
         ```
 > [!WARNING]
@@ -107,7 +105,6 @@ This is the most intesive step, as the static boot splash image is baked into th
 > `ls -l /dev/block/platform/*/by-name` to see all partitions
 
 ### 3) Unpack & Modify Image
-
    1) Unpack
       ```
       .\utilities\imgRePackerRK_1077_test\imgRePackerRK.exe .\images\boot.img
@@ -123,7 +120,6 @@ This is the most intesive step, as the static boot splash image is baked into th
 > - Orginal is renamed boot.img.bak
 
 ### 4) Upload modified image to device
-
    1) launch RKDevTool.exe
       -  Bottom should read "Found One ADB Device"
    3) Click empty space to far right of "Boot" entry & select repacked img file
@@ -137,23 +133,37 @@ This is the most intesive step, as the static boot splash image is baked into th
    ![partial_flash](https://github.com/JohnHeinlein/testing_notes/assets/29853148/cfff1032-48a8-4eef-acb8-9211136767b6)
    10) Click `Run` to flash. Device should reboot with the modified splash image.
 
-### Customize build.prop
+## Re-enable first time setup & customize build.prop
 
-Several configuration options can be changed, including the first-time setup wizard and the build string, by just modifying `build.prop`
+One-liner:
+- ```
+  adb root; adb remount; adb push .\resources\build.prop /system/build.prop
+  ```
 
-```
-adb root; adb remount; adb pull /system/build.prop .\build.prop
-```
+### Modify build.prop
+Several configuration options can be changed, including the first-time setup wizard and the build string, by just modifying `build.prop` and rebooting
 
-`ro.build.display.id` is the build string shown in  "About"
-`ro.setupwizard.mode` controls whether the Android first-time setup wizard can run. Separate commands below will actually trigger it
+1) Pull `build.prop` from device
+    ```
+    adb root; adb remount; adb pull /system/build.prop .\build.prop
+    ```
+2) Modify locally
+   - `ro.build.display.id` is the build string shown in  "About"
+   - `ro.setupwizard.mode` controls whether the Android first-time setup wizard can run. Separate commands below will actually trigger it
+3) Push modified file to device
+   ```
+   adb root; adb remount; adb push .\build.prop /system/build.prop
+   ```
 
-### First time setup wizard
-
-1.) Enable in build.prop as shown in previous step
-2.) Enable package component
-	- `adb root; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity`
-3.) Enable system setting
-	- `adb root; adb shell settings pu secure user_setup_complete 0`
+### Re-enable setup wizard
+1) Enable in build.prop as shown in previous step
+2) Enable package component
+   ```
+   adb root; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity
+   ```
+4) Enable system setting
+   ```
+   adb root; adb shell settings pu secure user_setup_complete 0
+   ```
 
 A factory reset would also trigger the setup wizard once it's enabled in build.prop, however this will also clear the preloaded wallpaper. Setting it to run manually like this allows for userspace customization to be done beforehand
