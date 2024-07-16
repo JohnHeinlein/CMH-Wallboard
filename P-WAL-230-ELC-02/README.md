@@ -25,8 +25,9 @@
 ---
 
 ## Enable debugging
-- Plug USB keyboard in BEFORE BOOT
+
 - Hold RESET button (pinhole on rear) and power on
+  - Unit will not boot if USB OTG port is plugged in (presumably switching to some kind of factory mode when it sees 5v?)
 - Scroll to Factory Reset
 - Reboot once complete
 - Tap cog icon on Zygote MDM
@@ -53,6 +54,7 @@ Otherwise,
     ```
 
 ## Clear user data
+
 - ```
   adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote'
   ```
@@ -60,6 +62,7 @@ Otherwise,
 > This device is symlinked to various other locations, `/data/media/0` should be the main device. Some links, like `/mnt/sdcard`, are not protected. Not very relevant here, but good to know in general.
 
 ## Wallpaper & Boot Animation
+
 **One-liner**: Push wallpaper to Pictures director, call Nova's wallpaper changer, and remove proprietary startup animation.
 ```
 adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; adb root; adb remount; adb shell 'rm /system/media/bootanimation.zip'
@@ -79,15 +82,18 @@ Otherwise:
      ```
 
 ## Boot splash (baked into ROM)
+
 This is the most intesive step, as the static boot splash image is baked into the boot ROM and must be extracted and re-packed. 
 
 > [!NOTE]
 > **Not every step is mandatory, as I've included the pre-packed .img for the 230 & 220.** It is only strictly necessary to switch to Loader mode and push the image to the correct address, unless you're working on a different model and want to be safe.
 
 ### 1) Change RKDevTool to English (If not already)
+
 ![change_language](https://github.com/JohnHeinlein/testing_notes/assets/29853148/e08cdfcf-b7cc-4905-a60f-86baf778318d) 
 
 ### 2) Dump boot img
+
    - ```
       adb shell ls -l /dev/block/platform/*/by-name/boot
       ```
@@ -101,6 +107,7 @@ This is the most intesive step, as the static boot splash image is baked into th
 > `ls -l /dev/block/platform/*/by-name` to see all partitions
 
 ### 3) Unpack & Modify Image
+
    1) Unpack
       ```
       .\utilities\imgRePackerRK_1077_test\imgRePackerRK.exe .\images\boot.img
@@ -116,6 +123,7 @@ This is the most intesive step, as the static boot splash image is baked into th
 > - Orginal is renamed boot.img.bak
 
 ### 4) Upload modified image to device
+
    1) launch RKDevTool.exe
       -  Bottom should read "Found One ADB Device"
    3) Click empty space to far right of "Boot" entry & select repacked img file
@@ -128,3 +136,24 @@ This is the most intesive step, as the static boot splash image is baked into th
       - This ensures that the firmware is only partially flashed
    ![partial_flash](https://github.com/JohnHeinlein/testing_notes/assets/29853148/cfff1032-48a8-4eef-acb8-9211136767b6)
    10) Click `Run` to flash. Device should reboot with the modified splash image.
+
+### Customize build.prop
+
+Several configuration options can be changed, including the first-time setup wizard and the build string, by just modifying `build.prop`
+
+```
+adb root; adb remount; adb pull /system/build.prop .\build.prop
+```
+
+`ro.build.display.id` is the build string shown in  "About"
+`ro.setupwizard.mode` controls whether the Android first-time setup wizard can run. Separate commands below will actually trigger it
+
+### First time setup wizard
+
+1.) Enable in build.prop as shown in previous step
+2.) Enable package component
+	- `adb root; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity`
+3.) Enable system setting
+	- `adb root; adb shell settings pu secure user_setup_complete 0`
+
+A factory reset would also trigger the setup wizard once it's enabled in build.prop, however this will also clear the preloaded wallpaper. Setting it to run manually like this allows for userspace customization to be done beforehand
