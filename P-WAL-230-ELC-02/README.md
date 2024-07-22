@@ -15,7 +15,7 @@
 *Broken up & explained better below*
 1. Launcher
    ```
-   adb root; adb remount; adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/app/com.patientpoint.dmm-2 /data/app/com.contextmediainc.system.zygote-1 /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/';
+   adb root; adb remount; adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/app/com.patientpoint.dmm-2 /data/app/com.contextmediainc.system.zygote-1 /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/ /init.zygote32.rc /init.zygote64_32.rc';
    ```
 2. Set boot splash with RKDevTool (Saves a reboot doing it here)
 3. Clear data. set wallpaper, re-enable setup wizard, and scrub strings from build.prop
