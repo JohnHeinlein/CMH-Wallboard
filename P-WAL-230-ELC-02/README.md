@@ -18,7 +18,7 @@
    adb root; adb remount; adb install '.\packages\com.teslacoilsw.launcher_6.2.19-62019_minAPI21(nodpi)_apkmirror.com.apk'; adb shell 'mv /data/app/com.teslacoilsw.launcher-1 /system/priv-app/; rm -r /data/data/com.contextmediainc.system.zygote /data/app/com.patientpoint.dmm-2 /data/app/com.contextmediainc.system.zygote-1 /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/ /init.zygote32.rc /init.zygote64_32.rc';
    ```
 2. Set boot splash with RKDevTool (Saves a reboot doing it here)
-3. Clear data. set wallpaper, re-enable setup wizard, and scrub strings from build.prop
+3. Clear data, set wallpaper, re-enable setup wizard, and scrub strings from build.prop
    ```
    adb root; adb remount; adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; adb push .\resources\build.prop /system/build.prop; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity; adb shell settings put secure user_setup_complete 0;
    ```
