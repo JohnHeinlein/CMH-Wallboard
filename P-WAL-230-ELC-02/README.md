@@ -50,7 +50,7 @@ Otherwise,
     ```
 - Remove Zygote MDM
   - ```
-    adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/ /init.zygote32.rc /init.zygote64_32.rc; 
+    adb shell rm -r /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/arm/system@priv-app@zygote1.apk /data/dalvik-cache/arm/system@priv-app@zygote_standalone.apk@classes.dex /system/priv-app/zygote_standalone.apk /system/priv-app/zygote1/; 
     ```
 
 ## Clear user data
