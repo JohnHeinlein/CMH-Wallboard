@@ -16,7 +16,7 @@ Also requires the ARM/4.4 version of [OpenGApps](https://opengapps.org/) to get 
 ## Nice Copy-and-Paste commands
 1) Install Nova Launcher
    - ```
-     adb root; adb remount; adb install .\'com.teslacoilsw.launcher_5.5.4-59400_minAPI16(nodpi)_apkmirror.com.apk'; adb shell 'cp /data/app/com.teslacoilsw.launcher-1.apk /system/priv-app; rm /system/priv-app/zygote-standalone.apk /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/system@priv-app@zygote_standalone.apk@classes.dex /system/media/bootanimation.zip'
+     adb root; adb remount; adb install .\'com.teslacoilsw.launcher_5.5.4-59400_minAPI16(nodpi)_apkmirror.com.apk'; adb shell 'cp /data/app/com.teslacoilsw.launcher-1.apk /system/priv-app; rm /system/priv-app/zygote_standalone.apk /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/system@priv-app@zygote_standalone.apk@classes.dex /system/media/bootanimation.zip'
      ```
 ## Install Launcher
 1. Sideload Install Nova Launcher APK
