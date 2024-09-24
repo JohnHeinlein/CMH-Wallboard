@@ -18,6 +18,19 @@ Also requires the ARM/4.4 version of [OpenGApps](https://opengapps.org/) to get 
    - ```
      adb root; adb remount; adb install .\'com.teslacoilsw.launcher_5.5.4-59400_minAPI16(nodpi)_apkmirror.com.apk'; adb shell 'cp /data/app/com.teslacoilsw.launcher-1.apk /system/priv-app; rm /system/priv-app/zygote_standalone.apk /data/data/com.contextmediainc.system.zygote /data/dalvik-cache/system@priv-app@zygote_standalone.apk@classes.dex /system/media/bootanimation.zip'
      ```
+2) Install TWRP
+   - See other directory for RKDevTool instructions lol
+     - May be detected as MSC Device. Send `adb reboot loader` to force into LOADER mode, like the 7.1 ones do automatically
+   - Select RECOVERY instead of Boot
+  
+3) Install OpenGApps
+   - Move .zip file to flash drive
+   - Mount flash drive in TWRP options
+     - `Mount` -> Check USB Storage
+   - `Install` -> Navigate to `usb-otg` and select .zip
+
+4) One final factory reset
+
 ## Install Launcher
 1. Sideload Install Nova Launcher APK
    - `adb install <path/to/launcher.apk>`
