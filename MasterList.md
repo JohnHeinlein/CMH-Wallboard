@@ -15,7 +15,7 @@ Compatible models:
    4. Run download
       ![AT_03](https://github.com/user-attachments/assets/dbc84410-c703-4c14-ac8f-ea2dfdd560ad)
 
-3. Load Google Apps
+3. Load Google Apps (First, download from [this link](https://sourceforge.net/projects/opengapps/files/arm/20220215/open_gapps-arm-4.4-nano-20220215.zip/download?use_mirror=pilotfiber&r=&use_mirror=autoselect))
    1. Reboot into the new recovery
       ```
       adb reboot recovery
