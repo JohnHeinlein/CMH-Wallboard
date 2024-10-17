@@ -20,7 +20,7 @@
 2. Set boot splash with RKDevTool (Saves a reboot doing it here)
 3. Clear data, set wallpaper, re-enable setup wizard, and scrub strings from build.prop
    ```
-   adb root; adb remount; adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; adb push .\resources\build.prop /system/build.prop; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity; adb shell settings put secure user_setup_complete 0;
+   adb root; adb remount; adb shell 'cd /mnt/sdcard; rm -r ./multifunctionclock ./RVPlayer ./cmh ./Android/data/com.contextmediainc.system.zygote /system/media/bootanimation.zip'; adb push .\pics\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png; adb shell am start -a android.intent.action.ATTACH_DATA -c android.intent.category.DEFAULT -d file:///mnt/sdcard/Pictures/default_wallpaper.png -t 'image/*' -e mimeType 'image/*'; adb push .\resources\build.prop /system/build.prop; adb shell pm enable com.google.android.setupwizard/com.google.android.setupwizard.SetupWizardActivity; adb shell settings put secure user_setup_complete 0;
    ```
 ---
 
@@ -70,7 +70,7 @@ adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper
 Otherwise:
 1. Push file to Pictures directory
    - ```
-     adb push .\pictures\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
+     adb push .\pics\default_wallpaper.png /mnt/sdcard/Pictures/default_wallpaper.png
      ```
 2. Launch wallpaper changer
    - ```
